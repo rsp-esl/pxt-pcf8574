@@ -45,6 +45,7 @@ enum PCF8574Address {
 //% color="#2c4e20" weight=100  
 namespace PCF8574 {
 
+    //% blockId="device" block="Device"
     export class Device {
         i2c_addr: number 
         buf: Buffer
