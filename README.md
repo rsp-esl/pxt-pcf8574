@@ -1,6 +1,6 @@
 # PCF8574
 
-A MakeCode-PXT extension for the PCF8574 8-bit I/O expander (I2C).
+A MakeCode-PXT extension for the PCF8574(AT) I2C device which can be used an 8-bit I/O expander.
 
 ![](icon.png)
 
