@@ -1,133 +1,74 @@
-///////////////////////////////////////////////////////////////////////////////
 
-enum PCF8574Address {
-    // 7-bit I2C addresses for PCF8574
-    //% block="0x20"
-    PCF8574_ADDR_0x20 = 0x20,
-    //% block="0x21"
-    PCF8574_ADDR_0x21 = 0x21,
-    //% block="0x22"
-    PCF8574_ADDR_0x22 = 0x22,
-    //% block="0x23"
-    PCF8574_ADDR_0x23 = 0x23,
-    //% block="0x24"
-    PCF8574_ADDR_0x24 = 0x24,
-    //% block="0x25"
-    PCF8574_ADDR_0x25 = 0x25,
-    //% block="0x26"
-    PCF8574_ADDR_0x26 = 0x26,
-    //% block="0x27"
-    PCF8574_ADDR_0x27 = 0x27,
-    
-    // 7-bit I2C addresses for PCF8574AT
-    //% block="0x38"
-    PCF8574AT_ADDR_0x38 = 0x38,
-    //% block="0x39"
-    PCF8574AT_ADDR_0x39 = 0x39,
-    //% block="0x3a"
-    PCF8574AT_ADDR_0x3a = 0x3a,
-    //% block="0x3b"
-    PCF8574AT_ADDR_0x3b = 0x3b,
-    //% block="0x3c"
-    PCF8574AT_ADDR_0x3c = 0x3c,
-    //% block="0x3d"
-    PCF8574AT_ADDR_0x3d = 0x3d,
-    //% block="0x3e"
-    PCF8574AT_ADDR_0x3e = 0x3e,
-    //% block="0x3f"
-    PCF8574AT_ADDR_0x3f = 0x3f
+enum BH1750Address {
+	//% block="0x23"
+    ADDR_PIN_LOW  = 0x23,
+	//% block="0x5c"
+    ADDR_PIN_HIGH = 0x5C
 }
-
 /*
- * PCF8574 functions
+ * BH1750 functions
  */
 
 //% color="#2c4e20" weight=100  
-namespace PCF8574 {
+namespace BH1750 {
 
-    //% blockId="device" block="Device"
-    export class Device {
-        i2c_addr: number 
-        buf: Buffer
-
-        /**
-        * set the address of the device 
-        * @param addr the new address of this device 
-        */        
-        //% blockId="device_set_address" block="set address %addr"
-        //% weight=100 blockGap=8
-        public setAddress( addr : number ) : void {
-            this.i2c_addr = addr         
-        }
-    
-        /**
-        * get the address of the device
-        */        
-        //% blockId="device_get_address" block="get address"
-        //% weight=100 blockGap=8
-        public getAddress() : number { 
-            return this.i2c_addr
-        }
-    
-        /**
-        * write a data byte to the device
-        * @param data the data byte to be sent to the device
-        */        
-        //% blockId="device_write_byte" block="write a data byte %data"
-        //% weight=100 blockGap=8
-        public writeByte( data : number ) : number {
-            if ( this.buf == null ) {
-                this.buf = pins.createBuffer(1)
-            }
-            this.buf.setNumber( NumberFormat.UInt8LE, 0, (data & 0xff) ) 
-            let result = pins.i2cWriteBuffer( this.i2c_addr, this.buf )
-            return result
-        }
-    
-        /**
-        * read a data byte from the device
-        */        
-        //% blockId="device_read_byte" block="read a data byte"
-        //% weight=100 blockGap=8
-        public readByte() : number {
-            let rbuf = pins.i2cReadBuffer(this.i2c_addr, 1)
-            if ( rbuf.length == 1 ) {
-                return rbuf.getNumber(NumberFormat.UInt8LE, 0)    
-            } else { 
-                return null
-            }
-        }    
-    }
-    
-    /**
-     * scan I2C devices and return an array of found I2C addresses.
-     */
-    //% blockId="PCF8574_SCAN_DEVICES" block="pcf8574 scan devices"
-    //% weight=100 blockGap=8
-    export function scanDevices() : number[] {
-        let buf = pins.createBuffer(1)
-        buf.setNumber(NumberFormat.UInt8LE, 0xff, 0)
-        let found_devices : number[] = []
-        for (let addr = 1; addr <= 0x7f; addr++) {
-            let result = pins.i2cWriteBuffer( addr, buf )
-            if (result == 0) {
-                found_devices.push( addr )
-            }
-        }
-        return found_devices
-    }    
+    let i2c_addr = BH1750Address.ADDR_PIN_LOW
 
     /**
-     * create a new PCF8574 device
+     * set the I2C address of BH1750, 
+     * @param addr is the 7-bit I2C address of BH1750 module
      */
-    //% blockId="PCF8574_CREATE_DEVICE" block="pcf8574 create a device"
+    //% blockId="BH1750_SET_ADDRESS" block="bh1750 set address %addr"
     //% weight=100 blockGap=8
-    export function create( addr : PCF8574Address = PCF8574Address.PCF8574_ADDR_0x20 ) : Device { 
-        let device = new Device()
-        device.buf = null
-        device.i2c_addr = addr
-        return device
+    export function setAddress(addr: BH1750Address): void {
+        i2c_addr = addr
     }
-    
-} 
-///////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * initialize BH1750 by turning the device on and
+     * then sending a soft-reset command.
+     */
+    //% blockId="BH1750_BEGIN" block="bh1750 begin %addr"
+    //% weight=90 blockGap=8
+    export function begin( addr : BH1750Address = BH1750Address.ADDR_PIN_LOW ): void {
+        // power on
+        pins.i2cWriteNumber(i2c_addr, 0x01, NumberFormat.UInt8BE)
+        // reset
+        pins.i2cWriteNumber(i2c_addr, 0x07, NumberFormat.UInt8BE)
+		basic.pause(10)
+        // set measurement mode
+        pins.i2cWriteNumber(i2c_addr, 0x10, NumberFormat.UInt8BE)
+		basic.pause(150)
+    }
+
+    /**
+     * turn on BH1750 to operate in continuous measurement mode
+     */
+    //% blockId="BH1750_ON" block="bh1750 turn on"
+    //% weight=90 blockGap=8
+    export function powerOn(): void {
+        // power on
+        pins.i2cWriteNumber(i2c_addr, 0x01, NumberFormat.UInt8BE)
+        // set measurement mode
+        pins.i2cWriteNumber(i2c_addr, 0x10, NumberFormat.UInt8BE)
+        basic.pause(150)
+    }
+
+    /**
+     * turn off BH1750, to reduce power consumption.
+     */
+    //% blockId="BH1750_OFF" block="bh1750 turn off"
+    //% weight=90 blockGap=8
+    export function powerOff(): void {
+        pins.i2cWriteNumber(i2c_addr, 0x00, NumberFormat.UInt8BE)
+    }
+
+    /**
+     * get the level of ambient light (lx)
+     */
+    //% blockId="BH1750_GET_INTENSITY" block="bh1750 get intensity (lx)"
+    //% weight=80 blockGap=8
+    export function getIntensity(): number {
+        return Math.idiv(pins.i2cReadNumber(i2c_addr, NumberFormat.UInt16BE) * 5, 6)
+    }
+}  
