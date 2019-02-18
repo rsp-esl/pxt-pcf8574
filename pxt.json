@@ -1,5 +1,5 @@
 {
-    "name": "pcf8574",
+    "name": "PCF8574",
     "version": "0.0.2",
     "description": "PCF8574 Makecode extension for Microbit",
     "dependencies": {
