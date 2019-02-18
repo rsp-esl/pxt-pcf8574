@@ -1,5 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
+// List of PCF8574(AT) addresses
+
 enum PCF8574Address {
     // 7-bit I2C addresses for PCF8574
     //% block="0x20"
