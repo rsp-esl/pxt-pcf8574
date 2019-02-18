@@ -120,7 +120,7 @@ namespace PCF8574 {
     /**
      * create a new PCF8574 device
      */
-    //% blockId="PCF8574_SCAN_DEVICES" block="%this|create PCF8574 "
+    //% blockId="PCF8574_CREATE_DEVICE" block="%this|create a device"
     //% weight=100 blockGap=8
 
 	export function create( addr : PCF8574Address = PCF8574Address.PCF8574_ADDR_0x20 ) : Device { 
