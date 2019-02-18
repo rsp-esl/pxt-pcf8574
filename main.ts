@@ -57,7 +57,6 @@ namespace PCF8574 {
 		*/		
 		//% blockId="pcf8574 set address" block="device|addr"
 		//% weight=85 blockGap=8
-		//% parts="pcf8574"
 		public setAddress( addr : number ) : void {
 			this.i2c_addr = addr 		
 		}
@@ -65,9 +64,8 @@ namespace PCF8574 {
 		/**
 		* get the address of the device
 		*/		
-		//% blockId="pcf8574 get address" block="device|get address"
+		//% blockId="pcf8574 get address" block="get address"
 		//% weight=85 blockGap=8
-		//% parts="pcf8574"
 		public getAddress() : number { 
 			return this.i2c_addr
 		}
@@ -76,9 +74,8 @@ namespace PCF8574 {
 		* write a data byte to the device
 		* @param data the data byte to be sent to the device
 		*/		
-		//% blockId="pcf8574 write byte" block="device|write a data byte %data"
+		//% blockId="pcf8574 write byte" block="write a data byte %data"
 		//% weight=85 blockGap=8
-		//% parts="pcf8574"
 		public writeByte( data : number ) : number {
 			if ( this.buf == null ) {
 				this.buf = pins.createBuffer(1)
@@ -91,9 +88,8 @@ namespace PCF8574 {
 		/**
 		* read a data byte from the device
 		*/		
-		//% blockId="pcf8574 read byte" block="device|read a data byte"
+		//% blockId="pcf8574 read byte" block="read a data byte"
 		//% weight=85 blockGap=8
-		//% parts="pcf8574"
 		public readByte() : number {
 			let rbuf = pins.i2cReadBuffer(this.i2c_addr, 1)
 			if ( rbuf.length == 1 ) {
@@ -107,7 +103,7 @@ namespace PCF8574 {
     /**
      * scan I2C devices and return an array of found I2C addresses.
      */
-    //% blockId="PCF8574_SCAN_DEVICES" block="pcf8574|scan devices"
+    //% blockId="PCF8574_SCAN_DEVICES" block="pcf8574 scan devices"
     //% weight=100 blockGap=8
     export function scanDevices() : number[] {
 		let buf = pins.createBuffer(1)
@@ -125,7 +121,7 @@ namespace PCF8574 {
     /**
      * create a new PCF8574 device
      */
-    //% blockId="PCF8574_CREATE_DEVICE" block="pcf8574|create a device"
+    //% blockId="PCF8574_CREATE_DEVICE" block="pcf8574 create a device"
     //% weight=100 blockGap=8
 	export function create( addr : PCF8574Address = PCF8574Address.PCF8574_ADDR_0x20 ) : Device { 
 		let device = new Device()
@@ -134,5 +130,5 @@ namespace PCF8574 {
 		return device
 	}
 	
-} // end-of-namespace
+} 
 ///////////////////////////////////////////////////////////////////////////////
