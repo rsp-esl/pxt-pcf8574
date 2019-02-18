@@ -38,6 +38,11 @@ enum PCF8574Address {
     PCF8574AT_ADDR_0x3f = 0x3f
 }
 
+/*
+ * PCF8574 functions
+ */
+
+//% color="#2c4e20" weight=100  
 
 //% color="#2c4e20" weight=100  
 namespace PCF8574 {
@@ -50,7 +55,7 @@ namespace PCF8574 {
 		* set the address of the device 
 		* @param addr the new address of this device 
 		*/		
-		//% blockId="pcf8574 set address" block="%this|addr"
+		//% blockId="pcf8574 set address" block="device|addr"
 		//% weight=85 blockGap=8
 		//% parts="pcf8574"
 		public setAddress( addr : number ) : void {
@@ -58,9 +63,9 @@ namespace PCF8574 {
 		}
 	
 		/**
-		* get the address of the device 
+		* get the address of the device
 		*/		
-		//% blockId="pcf8574 get address" block="%this|get address"
+		//% blockId="pcf8574 get address" block="device|get address"
 		//% weight=85 blockGap=8
 		//% parts="pcf8574"
 		public getAddress() : number { 
@@ -71,7 +76,7 @@ namespace PCF8574 {
 		* write a data byte to the device
 		* @param data the data byte to be sent to the device
 		*/		
-		//% blockId="pcf8574 write byte" block="%this|write a data byte %data"
+		//% blockId="pcf8574 write byte" block="device|write a data byte %data"
 		//% weight=85 blockGap=8
 		//% parts="pcf8574"
 		public writeByte( data : number ) : number {
@@ -86,7 +91,7 @@ namespace PCF8574 {
 		/**
 		* read a data byte from the device
 		*/		
-		//% blockId="pcf8574 read byte" block="%this|read a data byte"
+		//% blockId="pcf8574 read byte" block="device|read a data byte"
 		//% weight=85 blockGap=8
 		//% parts="pcf8574"
 		public readByte() : number {
@@ -102,7 +107,7 @@ namespace PCF8574 {
     /**
      * scan I2C devices and return an array of found I2C addresses.
      */
-    //% blockId="PCF8574_SCAN_DEVICES" block="%this|scan devices"
+    //% blockId="PCF8574_SCAN_DEVICES" block="pcf8574|scan devices"
     //% weight=100 blockGap=8
     export function scanDevices() : number[] {
 		let buf = pins.createBuffer(1)
@@ -120,9 +125,8 @@ namespace PCF8574 {
     /**
      * create a new PCF8574 device
      */
-    //% blockId="PCF8574_CREATE_DEVICE" block="%this|create a device"
+    //% blockId="PCF8574_CREATE_DEVICE" block="pcf8574|create a device"
     //% weight=100 blockGap=8
-
 	export function create( addr : PCF8574Address = PCF8574Address.PCF8574_ADDR_0x20 ) : Device { 
 		let device = new Device()
 		device.buf = null
