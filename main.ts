@@ -58,7 +58,7 @@ namespace PCF8574 {
         * Set the address of the device 
         * @param addr the new address of this device 
         */        
-        //% blockId="device_set_address" block="%device|set the device address %addr"
+        //% blockId="device_set_address" block="set the device address %addr"
         //% weight=40 blockGap=8
         //% parts="PCF8574"
         public setAddress( addr : number ) : void {
@@ -68,7 +68,7 @@ namespace PCF8574 {
         /**
         * Get the address of the device
         */        
-        //% blockId="device_get_address" block="%device|get the device address"
+        //% blockId="device_get_address" block="get the device address"
         //% weight=10 blockGap=8
         //% parts="PCF8574"
         public getAddress() : number { 
@@ -79,7 +79,7 @@ namespace PCF8574 {
         * Write a data byte to the device
         * @param data the data byte to be sent to the device
         */        
-        //% blockId="device_write_byte" block="%device|write a data byte %data to the device"
+        //% blockId="device_write_byte" block="write a data byte %data to the device"
         //% weight=20 blockGap=8
         //% parts="PCF8574"
         public writeByte( data : number ) : number {
@@ -94,7 +94,7 @@ namespace PCF8574 {
         /**
         * read a data byte from the device
         */        
-        //% blockId="device_read_byte" block="%device|read a data byte from the device"
+        //% blockId="device_read_byte" block="read a data byte from the device"
         //% weight=30 blockGap=8
         //% parts="PCF8574"
         public readByte() : number {
