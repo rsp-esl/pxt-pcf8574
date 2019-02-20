@@ -26,7 +26,7 @@ if (i2c_addr != 0) {
     serial.writeLine( 'set address of PCF8574(AT) to 0x' + byte2hex_str(i2c_addr) )
 }
 
-let dev = new PCF8574.Device()
+let dev = PCF8574.create()
 dev.setAddress( i2c_addr )
 serial.writeLine( 'current address 0x' + byte2hex_str( dev.getAddress()) )
 

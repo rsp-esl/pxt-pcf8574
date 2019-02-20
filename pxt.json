@@ -1,14 +1,13 @@
 {
     "name": "PCF8574",
-    "version": "0.0.2",
-    "description": "PCF8574 Makecode extension for Microbit",
+    "version": "0.0.1",
+    "description": "A Makecode/PXT-Microbit library for the PCF8574(AT) I2C 8-bit I/O expander",
     "dependencies": {
-        "core": "*",
-        "radio": "*"
+        "core": "*"
     },
     "files": [
         "README.md",
-        "main.ts"
+        "pcf8574.ts"
     ],
     "testFiles": [
         "test.ts"
